@@ -1,9 +1,8 @@
-## Architecture Overview
+## Innovate Inc. — AWS Architecture
 
-- OpenTofu + Terragrunt with S3 remote state and KMS
-- Private EKS cluster (endpoint private), access via OpenVPN EC2
-- Karpenter integration (IAM, SQS/EventBridge, CRDs/Helm/CRs)
+### Documents
+- [AWS Architecture Design](README.md)
 
-Diagrams:
-- See `docs/architecture/diagrams/` for Mermaid sources.
-- Suggested: infra-overview.mmd, networking-private-eks.mmd, eks-karpenter-flow.mmd
+### Diagrams
+- [Production infrastructure (HLD)](diagrams/prod-infra-hld.md)
+- [AWS organization (HLD)](diagrams/aws-org-hld.md)
