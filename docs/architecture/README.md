@@ -143,3 +143,8 @@
 
 - **Placement:** **Isolated subnets**; TLS in-transit; apps fetch endpoints/creds via Pod Identity + secrets integration.
 - **Ops:** Key namespaces and sensible TTLs; monitor hit ratio and latency with basic SLOs.
+
+---
+## Diagrams
+- [Production infrastructure (HLD)](diagrams/prod-infra-hld.md)
+- [AWS organization (HLD)](diagrams/aws-org-hld.md)
