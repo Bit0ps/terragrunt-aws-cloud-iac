@@ -1,0 +1,72 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "Enable IAM User Permissions",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::${account_id}:root"
+            },
+            "Action": "kms:*",
+            "Resource": "*"
+        },
+        {
+            "Sid": "EncryptDecryptKarpenterSqsQueueViaSQS",
+            "Effect": "Allow",
+            "Principal": { "AWS": "*" },
+            "Action": [
+                "kms:Encrypt",
+                "kms:Decrypt",
+                "kms:GenerateDataKey*",
+                "kms:DescribeKey"
+            ],
+            "Resource": "*",
+            "Condition": {
+                "StringEquals": {
+                    "kms:CallerAccount": "${account_id}",
+                    "kms:ViaService": "sqs.${region}.amazonaws.com"
+                }
+            }
+        },
+        {
+            "Sid": "AllowGrantsForAWSResourcesViaSQS",
+            "Effect": "Allow",
+            "Principal": { "AWS": "*" },
+            "Action": [
+                "kms:CreateGrant"
+            ],
+            "Resource": "*",
+            "Condition": {
+                "Bool": { "kms:GrantIsForAWSResource": "true" },
+                "StringEquals": {
+                    "kms:CallerAccount": "${account_id}",
+                    "kms:ViaService": "sqs.${region}.amazonaws.com"
+                }
+            }
+        },
+        {
+            "Sid": "KeyAdministration",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "${key_administrators_role}"
+            },
+            "Action": [
+                "kms:Update*",
+                "kms:UntagResource",
+                "kms:TagResource",
+                "kms:ScheduleKeyDeletion",
+                "kms:Revoke*",
+                "kms:Put*",
+                "kms:List*",
+                "kms:Get*",
+                "kms:Enable*",
+                "kms:Disable*",
+                "kms:Describe*",
+                "kms:Delete*",
+                "kms:Create*",
+                "kms:CancelKeyDeletion"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

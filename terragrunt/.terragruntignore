@@ -1,0 +1,32 @@
+# Ignore files and folders that should not be copied into the Terragrunt cache
+
+# VCS
+.git/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
+# Terraform/Tofu state and cache
+.terraform/
+.terraform.lock.hcl
+.tofu/
+.tofu.lock.hcl
+*.tfstate
+*.tfstate.*
+
+# Local files
+*.tfvars
+*.tfvars.json
+*.auto.tfvars
+*.auto.tfvars.json
+
+# Terragrunt cache and debug
+.terragrunt-cache/
+.terragrunt-debug.log
+
+# Logs
+*.log

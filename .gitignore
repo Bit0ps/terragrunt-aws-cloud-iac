@@ -1,0 +1,51 @@
+# OS
+.DS_Store
+
+# Editors / IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Terraform / OpenTofu
+.terraform/
+.terraform.lock.hcl
+.tofu/
+.tofu.lock.hcl
+*.tfstate
+*.tfstate.*
+terraform.tfvars
+terraform.tfvars.json
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+*.tfplan
+.state/
+
+# Terragrunt
+.terragrunt-cache/
+.terragrunt-debug.log
+
+# Environment / secrets
+.env
+.env.*
+
+# Logs
+*.log
+
+# Node (if present)
+node_modules/
+
+# Terrafile
+vendor/
+# Ignore only the root-level helm directory
+/helm/
+
+# Keep Helm files for EKS Karpenter inputs
+!terragrunt/aws/_inputs/dev/compute/eks/helm/**
+
+# Helm
+.helm/

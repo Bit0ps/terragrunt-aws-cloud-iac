@@ -1,0 +1,103 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "S3Management",
+      "Effect": "Allow",
+      "Action": ["s3:*"],
+      "Resource": [
+        "arn:aws:s3:::*"
+      ]
+    },
+    {
+      "Sid": "IamManagement",
+      "Effect": "Allow",
+      "Action": ["iam:*"],
+      "Resource": "*"
+    },
+    {
+      "Sid": "KmsManagement",
+      "Effect": "Allow",
+      "Action": ["kms:*"],
+      "Resource": "*"
+    },
+    {
+      "Sid": "EC2AndVpcManagement",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:*",
+        "ec2-instance-connect:*",
+        "elasticloadbalancing:*",
+        "cloudwatch:*",
+        "autoscaling:*",
+        "logs:*"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "CreateServiceLinkedRole",
+      "Effect": "Allow",
+      "Action": "iam:CreateServiceLinkedRole",
+      "Resource": "*",
+      "Condition": {
+          "StringEquals": {
+              "iam:AWSServiceName": [
+                  "autoscaling.amazonaws.com",
+                  "ec2scheduled.amazonaws.com",
+                  "elasticloadbalancing.amazonaws.com",
+                  "spot.amazonaws.com",
+                  "spotfleet.amazonaws.com",
+                  "transitgateway.amazonaws.com"
+              ]
+          }
+      }
+    },
+    {
+      "Sid": "EKSManagement",
+      "Effect": "Allow",
+      "Action": ["eks:*"],
+      "Resource": "*"
+    },
+    {
+      "Sid": "RDSManagement",
+      "Effect": "Allow",
+      "Action": ["rds:*"],
+      "Resource": "*"
+    },
+    {
+      "Sid": "SSMAgentManagement",
+      "Effect": "Allow",
+      "Action": ["ssm:*"],
+      "Resource": "*"
+    },
+    {
+      "Sid": "SQSManagement",
+      "Effect": "Allow",
+      "Action": ["sqs:*"],
+      "Resource": "*"
+    },
+    {
+      "Sid": "EventBridgeManagement",
+      "Effect": "Allow",
+      "Action": ["events:*"],
+      "Resource": "*"
+    },
+    {
+      "Sid": "ECRManagement",
+      "Effect": "Allow",
+      "Action": [
+        "ecr:*",
+        "ecr-public:*"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "STSManagement",
+      "Effect": "Allow",
+      "Action": ["sts:*"],
+      "Resource": "*"
+    }
+  ]
+}
+
+

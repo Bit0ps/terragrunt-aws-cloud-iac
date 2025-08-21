@@ -1,0 +1,42 @@
+serviceAccount:
+  create: true
+serviceMonitor:
+  enabled: false
+replicas: 2
+revisionHistoryLimit: 10
+nodeSelector:
+  node-role: "critical"
+  karpenter.sh/controller: "true"
+  scheduler.karpenter.enabled: "false"
+tolerations:
+  - key: "CriticalAddonsOnly"
+    operator: Equal
+    value: "true"
+resources:
+  requests:
+    cpu: 1
+    memory: 1Gi
+  limits:
+    cpu: 1
+    memory: 1Gi
+logLevel: info
+# Ref: https://karpenter.sh/docs/reference/settings
+# Ref: http://github.com/aws/karpenter-provider-aws/blob/main/charts/karpenter/values.yaml#L175
+settings:
+  batchMaxDuration: 10s
+  batchIdleDuration: 1s
+  preferencePolicy: Respect
+  minValuesPolicy: Strict
+  clusterCABundle: ""
+  clusterName: "opsfleet-dev"
+  clusterEndpoint: ""
+  isolatedVPC: false
+  eksControlPlane: true
+  vmMemoryOverheadPercent: 0.075
+  interruptionQueue: "karpenterController"
+  reservedENIs: "0"
+  disableDryRun: false
+  featureGates:
+    nodeRepair: false
+    reservedCapacity: true
+    spotToSpotConsolidation: true

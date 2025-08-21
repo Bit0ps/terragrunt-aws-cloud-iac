@@ -1,0 +1,45 @@
+apiVersion: karpenter.k8s.aws/v1
+kind: EC2NodeClass
+metadata:
+  name: arm64-general
+  labels:
+    app.kubernetes.io/managed-by: "Helm"
+    app.kubernetes.io/part-of: "karpenter"
+  annotations:
+    meta.helm.sh/release-namespace: "kube-system"
+spec:
+  kubelet:
+    cpuCFSQuota: true
+    evictionHard:
+      imagefs.available: 10%
+      nodefs.available: 10%
+    imageGCHighThresholdPercent: 80
+    imageGCLowThresholdPercent: 70
+    maxPods: 50
+    podsPerCore: 10
+  # Required, resolves a default ami and userdata
+  amiFamily: Bottlerocket
+  # Ref: https://github.com/bottlerocket-os/bottlerocket/releases
+  amiSelectorTerms:
+    - alias: bottlerocket@1.44.0
+  subnetSelectorTerms:
+    - tags:
+        karpenter.sh/discovery: opsfleet-dev
+        karpenter.sh/discovery/subnets: private
+  securityGroupSelectorTerms:
+    - tags:
+        karpenter.sh/discovery: opsfleet-dev
+  # Optional extra tags on instances
+  tags:
+    karpenter.sh/discovery: opsfleet-dev
+    Name: opsfleet-dev-karpenter-arm64-general
+    Karpenter: "true"
+    ClusterName: opsfleet-dev
+    Arch: arm64
+  role: EKSKarpenterManagedNodeGroupRole
+  metadataOptions:
+    httpEndpoint: enabled
+    httpProtocolIPv6: disabled
+    httpPutResponseHopLimit: 1
+    httpTokens: required
+  detailedMonitoring: false

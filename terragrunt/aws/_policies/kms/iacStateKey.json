@@ -1,0 +1,42 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "EnableRootPermissions",
+      "Effect": "Allow",
+      "Principal": { "AWS": "arn:aws:iam::${account_id}:root" },
+      "Action": "kms:*",
+      "Resource": "*"
+    },
+    {
+      "Sid": "AllowRoleUseOfKey",
+      "Effect": "Allow",
+      "Principal": { "AWS": "arn:aws:iam::${account_id}:role/${role_name}" },
+      "Action": [
+        "kms:DescribeKey",
+        "kms:Encrypt",
+        "kms:Decrypt",
+        "kms:GenerateDataKey",
+        "kms:CreateGrant",
+        "kms:ListAliases"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "AllowUserUseOfKey",
+      "Effect": "Allow",
+      "Principal": { "AWS": "arn:aws:iam::${account_id}:user/${user_name}" },
+      "Action": [
+        "kms:DescribeKey",
+        "kms:Encrypt",
+        "kms:Decrypt",
+        "kms:GenerateDataKey",
+        "kms:CreateGrant",
+        "kms:ListAliases"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+
+

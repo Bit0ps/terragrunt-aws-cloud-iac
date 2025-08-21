@@ -1,0 +1,62 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "Enable IAM User Permissions",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::${account_id}:root"
+            },
+            "Action": "kms:*",
+            "Resource": "*"
+        },
+        {
+            "Sid": "EncryptCloudWatchLogsViaService",
+            "Effect": "Allow",
+            "Action": [
+                "kms:Encrypt*",
+                "kms:Decrypt*",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+                "kms:Describe*"
+            ],
+            "Resource": "*",
+            "Principal": { "AWS": "*" },
+            "Condition": {
+                "StringEquals": {
+                    "kms:CallerAccount": "${account_id}",
+                    "kms:ViaService": "logs.${region}.amazonaws.com"
+                },
+                "ArnLike": {
+                    "kms:EncryptionContext:aws:logs:arn": [
+                        "arn:aws:logs:${region}:${account_id}:log-group:*"
+                      ]
+                }
+            }
+        },
+        {
+            "Sid": "KeyAdministration",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "${key_administrators_role}"
+            },
+            "Action": [
+                "kms:Update*",
+                "kms:UntagResource",
+                "kms:TagResource",
+                "kms:ScheduleKeyDeletion",
+                "kms:Revoke*",
+                "kms:Put*",
+                "kms:List*",
+                "kms:Get*",
+                "kms:Enable*",
+                "kms:Disable*",
+                "kms:Describe*",
+                "kms:Delete*",
+                "kms:Create*",
+                "kms:CancelKeyDeletion"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

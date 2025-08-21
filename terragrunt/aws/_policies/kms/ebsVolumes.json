@@ -1,0 +1,75 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "EnableIAMUserPermissions",
+            "Effect": "Allow",
+            "Action": [
+                "kms:*"
+            ],
+            "Resource": "*",
+            "Principal": {
+                "AWS": "arn:aws:iam::${account_id}:root"
+            }
+        },
+        {
+            "Sid": "AllowEBSUseOfKeyViaEC2",
+            "Effect": "Allow",
+            "Principal": { "AWS": "*" },
+            "Action": [
+                "kms:Encrypt",
+                "kms:Decrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+                "kms:DescribeKey"
+            ],
+            "Resource": "*",
+            "Condition": {
+                "StringEquals": {
+                    "kms:CallerAccount": "${account_id}",
+                    "kms:ViaService": "ec2.${region}.amazonaws.com"
+                }
+            }
+        },
+        {
+            "Sid": "AllowGrantsForAWSResourcesViaEC2",
+            "Effect": "Allow",
+            "Principal": { "AWS": "*" },
+            "Action": [
+                "kms:CreateGrant"
+            ],
+            "Resource": "*",
+            "Condition": {
+                "Bool": { "kms:GrantIsForAWSResource": "true" },
+                "StringEquals": {
+                    "kms:CallerAccount": "${account_id}",
+                    "kms:ViaService": "ec2.${region}.amazonaws.com"
+                }
+            }
+        },
+        {
+            "Sid": "KeyAdministration",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "${key_administrators_role}"
+            },
+            "Action": [
+                "kms:Update*",
+                "kms:UntagResource",
+                "kms:TagResource",
+                "kms:ScheduleKeyDeletion",
+                "kms:Revoke*",
+                "kms:Put*",
+                "kms:List*",
+                "kms:Get*",
+                "kms:Enable*",
+                "kms:Disable*",
+                "kms:Describe*",
+                "kms:Delete*",
+                "kms:Create*",
+                "kms:CancelKeyDeletion"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

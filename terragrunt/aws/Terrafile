@@ -1,0 +1,51 @@
+### Terrafile is a binary written in Go to systematically manage external modules from Github for use in Terraform ###
+### AWS MODULES ###
+tf-aws-iam:
+    source:  "https://github.com/terraform-aws-modules/terraform-aws-iam"
+    version: "v5.60.0"
+    destination:
+        - bootstrap
+        - dev/_global/iam/roles
+
+tf-aws-kms:
+    source:  "https://github.com/terraform-aws-modules/terraform-aws-kms"
+    version: "v4.0.0"
+    destination:
+        - dev/us-east-1/security/kms
+
+tf-aws-eks:
+    source:  "https://github.com/terraform-aws-modules/terraform-aws-eks"
+    version: "v21.1.0"
+    destination:
+        - aws/dev/us-east-1/compute/eks
+
+tf-aws-vpc:
+    source:  "https://github.com/terraform-aws-modules/terraform-aws-vpc"
+    version: "v6.0.1"
+    destination:
+        - aws/dev/us-east-1/network/vpc
+
+tf-aws-key-pair:
+    source:  "https://github.com/terraform-aws-modules/terraform-aws-key-pair"
+    version: "v2.1.0"
+    destination:
+        - aws/dev/us-east-1/security/key-pair
+
+tf-aws-ec2:
+    source:  "https://github.com/terraform-aws-modules/terraform-aws-ec2-instance"
+    version: "v6.0.2"
+    destination:
+        - dev/us-east-1/compute/ec2
+
+tf-aws-security-group:
+    source:  "https://github.com/terraform-aws-modules/terraform-aws-security-group"
+    version: "v5.3.0"
+    destination:
+        - dev/us-east-1/security/sg/openvpn
+
+### HELM MODULES ###
+tf-aws-helm-release:
+    source:  "https://github.com/cloudposse/terraform-aws-helm-release"
+    version: "0.10.1"
+    destination:
+        - helm/dev/us-east-1/security/key-pair
