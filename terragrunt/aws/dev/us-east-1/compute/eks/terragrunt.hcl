@@ -37,10 +37,11 @@ dependency "openvpn_sg" {
 
 dependencies {
   paths = [
-    "../../network/vpc",
+    "../../compute/ec2",
     "../../security/key-pair",
     "../../../_global/iam/roles/assumable-roles",
-    "../../security/kms"
+    "../../security/kms",
+     "../../network/vpc"
   ]
 }
 

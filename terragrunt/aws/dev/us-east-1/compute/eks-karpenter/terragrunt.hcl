@@ -2,7 +2,7 @@ terraform {
   source = "../../../../vendor/modules/tf-aws-eks//modules/karpenter"
 
   before_hook "helm_registry_logout" {
-    commands = ["init", "plan", "apply"]
+    commands = ["init", "plan", "apply", "destroy"]
     execute  = [
       "bash",
       "-lc",
@@ -11,7 +11,7 @@ terraform {
   }
 
   extra_arguments "helm_env" {
-    commands = ["init", "plan", "apply"]
+    commands = ["init", "plan", "apply", "destroy"]
     env_vars = {
       HELM_CACHE_HOME      = "${get_terragrunt_dir()}/.helm/cache"
       HELM_CONFIG_HOME     = "${get_terragrunt_dir()}/.helm/config"
@@ -47,9 +47,11 @@ dependency "kms" {
 dependencies {
   paths = [
     "../eks",
-    "../../network/vpc",
+    "../ec2",
+    "../../security/security-groups/openvpn",
     "../../security/key-pair",
-    "../../security/kms"
+    "../../security/kms",
+    "../../network/vpc"
   ]
 }
 
@@ -128,7 +130,7 @@ generate "helm_release" {
     wait                = var.helm_chart_karpenter_crd_wait
 
     lifecycle {
-      ignore_changes = [repository_username, repository_password]
+      ignore_changes = [repository_username]
     }
 
     depends_on = [
@@ -164,7 +166,7 @@ generate "helm_release" {
     ]
 
     lifecycle {
-      ignore_changes = [repository_username, repository_password]
+      ignore_changes = [repository_username]
     }
 
     depends_on = [helm_release.karpenter_crd]
