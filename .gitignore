@@ -41,8 +41,9 @@ node_modules/
 
 # Terrafile
 vendor/
+
 # Ignore only the root-level helm directory
-/helm/
+/terragrunt/helm/
 
 # Keep Helm files for EKS Karpenter inputs
 !terragrunt/aws/_inputs/dev/compute/eks/helm/**
